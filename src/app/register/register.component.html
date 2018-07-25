@@ -1,0 +1,33 @@
+<div class="container">
+  <form>
+   
+<div class="form-group ">
+    <label id="email">Email</label>
+    
+    <input [(ngModel)]="regData.email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel" name="email" class="form-control"
+    placeholder="Email address" type="email">
+  </div>
+    <div [hidden]="email.dirty ||email.untouched" class="alert alert-info">please fill this field</div>
+   <div [hidden]="email.valid" class="alert alert-info">Please enter a valid email </div>
+
+   <div class="form-group ">
+    <label id="password">Password</label>
+    
+    <input [(ngModel)]="regData.password" id="password"  #password="ngModel" name="password" class="form-control"
+    placeholder="Password" type="password">
+  </div>
+  <div class="form-group ">
+    <label id="name">User Name</label>
+    
+    <input [(ngModel)]="regData.userName" id="name"  #userName="ngModel" name="userName" class="form-control"
+    placeholder="userName" type="text">
+  </div>
+ 
+  <button type="button" class="btn btn-primary" (click)="registerUser()">Register</button>
+
+
+
+    
+</form>
+
+</div>
