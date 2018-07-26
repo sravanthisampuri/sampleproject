@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12" *ngIf="profileData">
       <div class="col-xs-8">
         <div class="text-left profiledata">
           <img src="{{ profileData.userData.profilepicture }}" style="width:30%">
@@ -8,22 +8,34 @@
         </div>
         <hr>
         <h1>Friends-List</h1>
-    </div>
-    <div class="col-xs-4 profiledata" *ngIf="show">
-      <div *ngFor="let userdata of usersData" class="userClass">
-        <div>
-          <img src="{{ userdata.profilepicture }}" style="width:30%">
-          <span>{{ userdata.name }}</span>
-        </div>
-        <br>
-        <button type="button" class="btn btn-primary" (click)="friendsList($event)">Add Request</button>
       </div>
-    </div>
-    <div class="col-xs-4 profiledata" *ngIf="!show">
+      <div class="col-xs-4 profiledata" *ngIf="show">
+        <div *ngFor="let userdata of userDetails" class="userClass">
+          <div>
+            <img src="{{ userdata.profilepicture }}" style="width:30%">
+            <span>{{ userdata.name }}</span>
+          </div>
+          <br>
+          <div *ngIf = "userdata.friendsReqList.length">
+            <div *ngFor="let friend of userdata.friendsReqList">
+              <div *ngIf="id != friend.friendId">
+                <button type="button" class="btn btn-primary" (click)="friendsList(userdata)">Add Request</button>
+              </div>
+              <div *ngIf="id == friend.friendId">
+                <button type="button" class="btn btn-primary" (click)="requestconfirmation(userdata,'1')">Confirm</button>
+                <button type="button" class="btn btn-danger" (click)="requestconfirmation(userdata,'0')">Reject</button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf = "!userdata.friendsReqList.length">
+            <button type="button" class="btn btn-primary" (click)="friendsList(userdata)">Add Request</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-4 profiledata" *ngIf="!show">
         Request successfully sent
-       </div>
-    
+      </div>
+
+    </div>
   </div>
 </div>
-</div>
-

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { loginServices } from '../login.service';
 import { profileServices } from '../profile.service'
+import { _ } from 'underscore';
 
 @Component({
   selector: 'app-profile',
@@ -13,11 +14,14 @@ export class ProfileComponent implements OnInit {
   public id;
   public usersData;
   public user;
+  public users;
   show = true;
-  constructor(private LoginServices: loginServices, private route: Router,private ProfileServices: profileServices) { }
+  public userDetails = [];
+  constructor(private LoginServices: loginServices, private route: Router, private ProfileServices: profileServices) { }
 
   ngOnInit() {
     this.getDetails();
+    this.getFriendsList();
   }
   getDetails() {
     this.id = localStorage.getItem('id')
@@ -38,28 +42,51 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log(response)
-          this.usersData = response;
-          console.log(this.id)
-          this.usersData = this.usersData.userData;
+          this.users = response;
+          this.usersData = this.users.userData;
+          console.log(this.usersData)
           for (var i = 0; i <= this.usersData.length; i++) {
-            if (this.id === this.usersData[i]._id) {
-              console.log(this.usersData[i]._id)
-              this.user = this.usersData.splice(i, 1)
-              console.log(this.user)
-              // this.show = false;
+            if (this.id != this.usersData[i]._id) {
+              this.userDetails.push(this.usersData[i]);
             }
           }
-          this.usersData = this.usersData.push(this.user)
+
+
+          
         }
       )
   }
 
-  friendsList() {
-    this.ProfileServices.addRequest(this.usersData)
+  friendsList(user) {
+    console.log(user);
+    this.ProfileServices.addRequest({senderId:this.id , recieverId :user._id , status : "Requested"})
       .subscribe(
         (response) => {
           console.log(response)
-          }
+        }
       )
   }
+
+  getFriendsList(){
+    this.ProfileServices.getFriendsList(this.id)
+      .subscribe(
+        (response) => {
+          console.log(response)
+        }
+      )
+  }
+
+
+  requestconfirmation(userDetails,confirmation){
+    if(confirmation == '1'){
+      this.ProfileServices.confirmRequest(userDetails,this.id)
+        .subscribe(
+          (response) =>{
+            console.log(response);
+          }
+        )
+    }
+  }
+
+
 }
