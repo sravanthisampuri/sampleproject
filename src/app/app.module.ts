@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { loginServices } from './login.service'
 import { RouterModule,Routes } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
+import { profileServices } from './profile.service'
 
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -31,7 +32,7 @@ const routes: Routes = ([
     RouterModule.forRoot(routes),
     HttpClientModule
   ],
-  providers: [loginServices],
+  providers: [loginServices,profileServices],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

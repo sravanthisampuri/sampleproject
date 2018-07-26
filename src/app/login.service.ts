@@ -15,4 +15,7 @@ loginDetails(getDetails){
 profileDetails(id){
     return this.http.get("http://localhost:3001/v1/profile/profiledetails/"+id)    
 }
+getUserlist(){
+    return this.http.get("http://localhost:3001/v1/profile/userlistDetails")    
+}
 }

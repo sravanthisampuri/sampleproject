@@ -1,0 +1,17 @@
+.profiledata{
+    padding:20px;
+}
+.profiledata img{
+    margin-right:30px;
+}
+.profiledata span{
+    font-size:20px;
+}
+.userClass{
+    margin:0 0 20px 0;
+    background-color:wheat;
+    padding:15px;
+}
+button{
+margin-right:10px;
+}
